@@ -1,4 +1,7 @@
 # Cosmic Binding Basins / TEC-2
+## DOI
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20310154.svg)](https://doi.org/10.5281/zenodo.20310154)
 
 Short exploratory preprint and pilot validation for the TEC-2 framework:
 
@@ -20,9 +23,7 @@ The index compares the effective acceleration associated with the cosmological c
 
 This is not claimed as a new physical law. It is a compact diagnostic derived from the ΛCDM turnaround scale.
 
-## DOI
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20310154.svg)](https://doi.org/10.5281/zenodo.20310154)
 
 ## Files
 
