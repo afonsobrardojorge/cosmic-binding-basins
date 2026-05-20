@@ -1,0 +1,11 @@
+{
+  "n_total": 11,
+  "n_informative_turnaround_like": 9,
+  "n_central_T_less_equal_1": 9,
+  "n_possible_uncertainty_violation": 1,
+  "median_T_informative": 0.3187764135579858,
+  "max_T_central_informative": 0.41834907350956513,
+  "objects_possible_uncertainty_violation": [
+    "Coma Cluster"
+  ]
+}

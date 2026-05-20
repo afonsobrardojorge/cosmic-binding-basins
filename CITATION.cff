@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+title: "Cosmic Binding Basins: A Dimensionless Boundary Index for Gravitational Membership in Lambda-CDM"
+message: "If you use this exploratory preprint, data, or code, please cite this repository or its archived DOI."
+type: software
+authors:
+  - family-names: "Afonso"
+    given-names: ""
+abstract: "Exploratory preprint and pilot validation for TEC-2, a dimensionless boundary index for gravitational-basin membership in Lambda-CDM."
+keywords:
+  - cosmology
+  - dark energy
+  - turnaround radius
+  - Lambda-CDM
+  - gravitational binding
+license: CC-BY-4.0
