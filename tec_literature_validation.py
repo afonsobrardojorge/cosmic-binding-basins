@@ -10,6 +10,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 OUT = Path(__file__).resolve().parents[1]
 CSV_OUT = OUT / "data" / "tec_literature_validation.csv"
+CSV_PUBLIC_OUT = OUT / "data" / "cosmic_binding_basins_literature_validation.csv"
 SUMMARY_OUT = OUT / "data" / "tec_literature_validation_summary.json"
 FIG_OUT = OUT / "figures" / "tec_literature_validation.png"
 
@@ -20,6 +21,30 @@ H0_KM = 67.4
 H0 = H0_KM * 1000 / MPC
 H = H0_KM / 100.0
 OMEGA_L = 0.685
+
+RADIUS_TYPE_EN = {
+    "satélite ligado, não turnaround": "bound satellite (not turnaround)",
+    "zero-velocity / turnaround local": "zero-velocity / local turnaround",
+    "zero-velocity / turnaround aproximado": "zero-velocity / approximate turnaround",
+    "raio interno, não turnaround": "internal core radius (not turnaround)",
+    "turnaround/infall bound; ambiente filamentar": "turnaround/infall bound; filamentary environment",
+    "turnaround/collapsing core": "turnaround/collapsing core",
+    "turnaround/candidate bound supercluster": "turnaround/candidate bound supercluster",
+}
+
+NOTES_EN = {
+    "Teste interno: deve estar muito abaixo da fronteira TEC-2.": "Internal control: should lie far below the TEC-2 boundary.",
+    "Massa independente e raio de zero-velocity local.": "Independent mass estimate and local zero-velocity radius.",
+    "Grupo local próximo usado como teste de turnaround.": "Nearby local group used as a turnaround-scale test.",
+    "Massa de grupos virializados e intervalo de superfície de velocidade zero.": "Mass from virialized groups and zero-velocity surface interval.",
+    "Estimativa via modelo Tolman-Bondi/local flow.": "Estimate based on Tolman-Bondi/local-flow modelling.",
+    "Ponto interno não informativo para fronteira, mas deve cumprir TΛ << 1.": "Internal control, not informative as a boundary point, but expected to satisfy TΛ << 1.",
+    "Raio de turnaround inferior e possível limite superior; Coma não é isolado.": "Lower turnaround/infall radius and possible upper limit; Coma is not isolated.",
+    "Massa e raio publicados em unidades h^-1.": "Published mass and radius converted from h^-1 units.",
+    "Core colapsante comparado em estudos de superenxames.": "Collapsing core discussed in supercluster studies.",
+    "Core massivo em turnaround/collapse.": "Massive core in turnaround/collapse.",
+    "Estimativa clássica de estrutura grande ligada; incertezas sistemáticas altas.": "Classical candidate for a large bound structure; systematic uncertainties are high.",
+}
 
 
 def font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
@@ -191,7 +216,7 @@ def build_dataset() -> pd.DataFrame:
         "turnaround/collapsing core",
         mass=convert_h_inv(1.3e16),
         radius=convert_h_inv(12.4),
-        source="Reisenegger et al.; Einasto et al. 2021",
+        source="Einasto et al. 2021; Reisenegger et al. 2000",
         notes="Core massivo em turnaround/collapse.",
     )
     add_row(
@@ -219,6 +244,46 @@ def summarize(df: pd.DataFrame) -> dict:
     }
 
 
+def public_dataset(df: pd.DataFrame) -> pd.DataFrame:
+    public = df.copy()
+    public["radius_type"] = public["tipo_medida"].map(RADIUS_TYPE_EN).fillna(public["tipo_medida"])
+    public["notes"] = public["notas"].map(NOTES_EN).fillna(public["notas"])
+    public = public.rename(
+        columns={
+            "estrutura": "object",
+            "massa_msun": "mass_msun",
+            "massa_low_msun": "mass_low_msun",
+            "massa_high_msun": "mass_high_msun",
+            "raio_mpc": "radius_mpc",
+            "raio_low_mpc": "radius_low_mpc",
+            "raio_high_mpc": "radius_high_mpc",
+            "T_lambda": "T_lambda",
+            "T_lambda_low": "T_lambda_low",
+            "T_lambda_high": "T_lambda_high",
+            "pode_violar_com_incerteza": "possible_uncertainty_violation",
+            "fonte": "source",
+        }
+    )
+    return public[
+        [
+            "object",
+            "radius_type",
+            "mass_msun",
+            "mass_low_msun",
+            "mass_high_msun",
+            "radius_mpc",
+            "radius_low_mpc",
+            "radius_high_mpc",
+            "T_lambda",
+            "T_lambda_low",
+            "T_lambda_high",
+            "possible_uncertainty_violation",
+            "source",
+            "notes",
+        ]
+    ]
+
+
 def draw_validation_plot(df: pd.DataFrame) -> None:
     img = Image.new("RGB", (1800, 1250), "white")
     d = ImageDraw.Draw(img)
@@ -226,7 +291,7 @@ def draw_validation_plot(df: pd.DataFrame) -> None:
     label_font = font(27, True)
     tick_font = font(21)
     small_font = font(18)
-    d.text((120, 38), "Validação piloto TEC-2 com estruturas publicadas", fill=(22, 42, 58), font=title_font)
+    d.text((120, 38), "TEC-2 pilot validation with published structures", fill=(22, 42, 58), font=title_font)
     left, top, right, bottom = 150, 150, 1610, 900
     xlim = (11.3, 17.0)
     ylim = (-0.9, 1.65)
@@ -251,7 +316,7 @@ def draw_validation_plot(df: pd.DataFrame) -> None:
     masses = [10 ** (xlim[0] + i * (xlim[1] - xlim[0]) / 300) for i in range(301)]
     line = [(xmap(math.log10(m)), ymap(math.log10(r_lambda_mpc(m)))) for m in masses]
     d.line(line, fill=(20, 20, 20), width=5)
-    d.text((xmap(15.1), ymap(0.95)), "T_lambda = 1 / R_lambda", fill=(20, 20, 20), font=font(22, True))
+    d.text((xmap(15.0), ymap(0.95)), "T_lambda = 1 boundary", fill=(20, 20, 20), font=font(22, True))
 
     label_offsets = {
         "Milky Way / Leo I": (12, 10),
@@ -278,6 +343,16 @@ def draw_validation_plot(df: pd.DataFrame) -> None:
     for _, row in df.iterrows():
         x = xmap(math.log10(row["massa_msun"]))
         y = ymap(math.log10(row["raio_mpc"]))
+        x_low = xmap(math.log10(row["massa_low_msun"]))
+        x_high = xmap(math.log10(row["massa_high_msun"]))
+        y_low = ymap(math.log10(row["raio_low_mpc"]))
+        y_high = ymap(math.log10(row["raio_high_mpc"]))
+        d.line((x_low, y, x_high, y), fill=(85, 85, 85), width=2)
+        d.line((x, y_high, x, y_low), fill=(85, 85, 85), width=2)
+        d.line((x_low, y - 5, x_low, y + 5), fill=(85, 85, 85), width=2)
+        d.line((x_high, y - 5, x_high, y + 5), fill=(85, 85, 85), width=2)
+        d.line((x - 5, y_low, x + 5, y_low), fill=(85, 85, 85), width=2)
+        d.line((x - 5, y_high, x + 5, y_high), fill=(85, 85, 85), width=2)
         color = (37, 120, 175)
         if row["tipo_medida"].lower().find("não turnaround") >= 0:
             color = (150, 150, 150)
@@ -290,33 +365,30 @@ def draw_validation_plot(df: pd.DataFrame) -> None:
         dx, dy = label_offsets.get(row["estrutura"], (12, -9))
         d.text((x + dx, y + dy), label, fill=(45, 45, 45), font=small_font)
 
-    d.text((left + 540, bottom + 70), "massa M (M_sun)", fill=(30, 30, 30), font=label_font)
-    d.text((left, top - 46), "raio R (Mpc)", fill=(30, 30, 30), font=label_font)
-    d.text((150, 1030), "Todos os pontos centrais informativos ficam abaixo do limite T_lambda = 1; Coma pode aproximar-se do limite sob escolhas extremas de incerteza.", fill=(70, 70, 70), font=font(22))
-    d.text((150, 1070), "Isto é evidência piloto de consistência com a fronteira TEC-2, não prova final de universalidade.", fill=(110, 70, 35), font=font(22, True))
+    d.text((left + 540, bottom + 70), "mass M (M_sun)", fill=(30, 30, 30), font=label_font)
+    d.text((left, top - 46), "radius R (Mpc)", fill=(30, 30, 30), font=label_font)
+    d.text((150, 1030), "All informative central estimates remain below T_lambda = 1; Coma can approach the limit under extreme uncertainty choices.", fill=(70, 70, 70), font=font(22))
+    d.text((150, 1070), "This is pilot consistency evidence for the TEC-2 boundary, not final proof of universality.", fill=(110, 70, 35), font=font(22, True))
     img.save(FIG_OUT, quality=95)
 
 
 def main() -> None:
     CSV_OUT.parent.mkdir(parents=True, exist_ok=True)
+    CSV_PUBLIC_OUT.parent.mkdir(parents=True, exist_ok=True)
     SUMMARY_OUT.parent.mkdir(parents=True, exist_ok=True)
     FIG_OUT.parent.mkdir(parents=True, exist_ok=True)
-
     df = build_dataset()
     summary = summarize(df)
-
     df.to_csv(CSV_OUT, index=False)
-    SUMMARY_OUT.write_text(
-        json.dumps(summary, indent=2, ensure_ascii=False),
-        encoding="utf-8"
-    )
-
+    public_dataset(df).to_csv(CSV_PUBLIC_OUT, index=False)
+    SUMMARY_OUT.write_text(json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
     draw_validation_plot(df)
-
     print(CSV_OUT)
+    print(CSV_PUBLIC_OUT)
     print(SUMMARY_OUT)
     print(FIG_OUT)
     print(json.dumps(summary, indent=2, ensure_ascii=False))
+
 
 if __name__ == "__main__":
     main()

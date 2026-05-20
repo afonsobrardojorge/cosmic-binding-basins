@@ -1,0 +1,56 @@
+{
+  "enxame": {
+    "n": 180,
+    "median_T_lambda": 0.02334773629556091,
+    "median_log10_T_lambda": -1.6317560192782317,
+    "pct_T_menor_1": 100.0,
+    "pct_T_maior_10": 0.0,
+    "median_raio_sobre_R_lambda": 0.2858126296021931
+  },
+  "filamento": {
+    "n": 180,
+    "median_T_lambda": 2.7889348337501114,
+    "median_log10_T_lambda": 0.4453530580719103,
+    "pct_T_menor_1": 32.77777777777778,
+    "pct_T_maior_10": 30.0,
+    "median_raio_sobre_R_lambda": 1.407539199473648
+  },
+  "grupo": {
+    "n": 180,
+    "median_T_lambda": 0.05978519072587401,
+    "median_log10_T_lambda": -1.2234085904760033,
+    "pct_T_menor_1": 96.11111111111111,
+    "pct_T_maior_10": 0.0,
+    "median_raio_sobre_R_lambda": 0.39101856900559984
+  },
+  "halo_galactico": {
+    "n": 220,
+    "median_T_lambda": 0.0027262352953301245,
+    "median_log10_T_lambda": -2.5644676212891366,
+    "pct_T_menor_1": 100.0,
+    "pct_T_maior_10": 0.0,
+    "median_raio_sobre_R_lambda": 0.13969501201188864
+  },
+  "superenxame": {
+    "n": 130,
+    "median_T_lambda": 1.7050563112625272,
+    "median_log10_T_lambda": 0.23173722685324832,
+    "pct_T_menor_1": 33.84615384615385,
+    "pct_T_maior_10": 24.615384615384617,
+    "median_raio_sobre_R_lambda": 1.1946643632737777
+  },
+  "vazio": {
+    "n": 210,
+    "median_T_lambda": 208.10990292795867,
+    "median_log10_T_lambda": 2.318209842563405,
+    "pct_T_menor_1": 0.9523809523809524,
+    "pct_T_maior_10": 93.80952380952381,
+    "median_raio_sobre_R_lambda": 5.925784126265047
+  },
+  "_turnaround_synthetic_fit": {
+    "slope_beta": 0.33324575421547115,
+    "intercept_A": -3.950043819049084,
+    "expected_beta": 0.3333333333333333,
+    "scatter_dex": 0.08
+  }
+}

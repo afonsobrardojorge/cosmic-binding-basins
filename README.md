@@ -1,11 +1,14 @@
 # Cosmic Binding Basins / TEC-2
-## DOI
-
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20310154.svg)](https://doi.org/10.5281/zenodo.20310154)
 
 Short exploratory preprint and pilot validation for the TEC-2 framework:
 
-> Dark energy does not destroy gravitationally bound structures; it defines the outer limit of gravitational membership.
+> Dark energy is treated here as a large-scale boundary-setting term for gravitational membership, rather than as an internal dynamical disruption mechanism within already bound systems.
+
+## DOI
+
+Archived v0.1.0 DOI: [10.5281/zenodo.20310154](https://doi.org/10.5281/zenodo.20310154)
+
+Current working version in this repository: `v0.2.0`.
 
 ## Core idea
 
@@ -23,21 +26,48 @@ The index compares the effective acceleration associated with the cosmological c
 
 This is not claimed as a new physical law. It is a compact diagnostic derived from the ΛCDM turnaround scale.
 
+## Geometric extension
 
+The current manuscript also introduces TEC-3 as a proposed extension, not as a validated result. TEC-3 reframes basin membership through local Weyl/tidal curvature versus the cosmological dark-energy curvature scale:
+
+```text
+B_Lambda(x) = sqrt(C_abgd C^abgd / 48) / (Lambda/3)
+```
+
+For the ideal Schwarzschild-de Sitter case, this reduces to:
+
+```text
+B_Lambda(R) = 1 / T_Lambda(R,M)
+```
+
+This is the stronger research direction for future simulation tests.
 
 ## Files
 
-- `TEC2_preprint.pdf`: short exploratory preprint draft.
-- `tec_literature_validation.csv`: pilot literature validation sample.
-- `tec_literature_validation.py`: script used to compute `T_Lambda` for the literature sample.
-- `tec_literature_validation.png`: validation plot with published structures.
-- `figura_raio_tensao.png`: theoretical equilibrium-radius plot.
-- `tec_literature_validation_summary.json`: summary statistics for the pilot validation.
+- `paper/Cosmic_Binding_Basins_preprint_v0.2.docx`: editable revised short preprint draft.
+- `paper/Cosmic_Binding_Basins_preprint_v0.2.pdf`: shareable revised PDF generated from the same manuscript content.
+- `data/cosmic_binding_basins_literature_validation.csv`: clean English pilot validation sample for publication.
+- `data/tec_literature_validation.csv`: internal raw validation sample used by the scripts.
+- `code/tec_literature_validation.py`: script used to compute `T_Lambda` for the literature sample.
+- `figures/tec_literature_validation.png`: validation plot with error bars.
+- `figures/tec_diagrama_fase_Tlambda.png`: TEC phase diagram, now labelled in English.
+- `figures/tec_resumo_por_classe.png`: synthetic class summary, now labelled in English.
+- `figures/tec_turnaround_fit.png`: synthetic turnaround-scaling test, now labelled in English.
+- `figures/tec_energia_escura_dinamica.png`: dynamical dark-energy extension, now labelled in English.
+- `data/tec_resumo_estatistico.json`: synthetic sample summary.
+- `code/tec_numerical_study.py`: synthetic proof-of-concept script.
 - `references.bib`: BibTeX references.
-  
+
 ## Publication status
 
 Exploratory preprint draft. Not peer reviewed.
+
+## v0.2.0 changes
+
+- Revised the dark-energy wording to avoid rhetorical "destruction" language.
+- Converted figure labels and captions to English.
+- Corrected the validation boundary label to `T_Lambda = 1 boundary`.
+- Expanded the manuscript figure set and retained TEC-3 as a proposed geometric extension, not a validated result.
 
 ## Recommended claim
 

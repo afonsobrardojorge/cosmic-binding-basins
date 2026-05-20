@@ -3,9 +3,11 @@ title: "Cosmic Binding Basins: A Dimensionless Boundary Index for Gravitational 
 message: "If you use this exploratory preprint, data, or code, please cite this repository or its archived DOI."
 type: software
 authors:
-  - family-names: "Afonso"
-    given-names: ""
-abstract: "Exploratory preprint and pilot validation for TEC-2, a dimensionless boundary index for gravitational-basin membership in Lambda-CDM."
+  - family-names: "Sal Jorge"
+    given-names: "Afonso Brardo Buinheira"
+abstract: "Exploratory preprint and pilot validation for TEC-2, a dimensionless boundary index for gravitational-basin membership in Lambda-CDM, with TEC-3 proposed as a geometric curvature-dominance extension."
+version: "0.2.0"
+doi: "10.5281/zenodo.20310154"
 keywords:
   - cosmology
   - dark energy
