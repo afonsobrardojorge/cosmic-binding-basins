@@ -22,14 +22,14 @@ This is not claimed as a new physical law. It is a compact diagnostic derived fr
 
 ## Files
 
-- `TEC2_preprint_curto_v2_formula_extensoes.docx`: short preprint draft.
+- `TEC2_preprint.pdf`: short exploratory preprint draft.
 - `tec_literature_validation.csv`: pilot literature validation sample.
 - `tec_literature_validation.py`: script used to compute `T_Lambda` for the literature sample.
-- `tec_literature_validation.png`: validation plot with error bars.
-- `tec_resumo_estatistico.json`: synthetic sample summary.
-- `tec_numerical_study.py`: synthetic proof-of-concept script.
+- `tec_literature_validation.png`: validation plot with published structures.
+- `figura_raio_tensao.png`: theoretical equilibrium-radius plot.
+- `tec_literature_validation_summary.json`: summary statistics for the pilot validation.
 - `references.bib`: BibTeX references.
-
+  
 ## Publication status
 
 Exploratory preprint draft. Not peer reviewed.
